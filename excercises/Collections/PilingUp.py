@@ -1,26 +1,64 @@
-n = int(input())
+from typing import List
 
 
-def is_possible(cubes):
-    minimum = None
-    for i in range(len(cubes) // 2):
-        left = cubes[i]
-        right = cubes[-(i + 1)]
-        mini = min(left, right)
-        maxi = max(left, right)
+def level_is_smaller(cubes):
+    if len(cubes) <= 1:
+        return True
 
-        if minimum is None:
-            minimum = mini
-        elif maxi > minimum:
-            return False
+    if cubes[0] >= cubes[-1]:
+        val = cubes.pop(0)
+    else:
+        val = cubes.pop(-1)
+
+    if val < max(cubes[0], cubes[- 1]):
+        return False
+
+    return level_is_smaller(cubes)
+
+
+def is_possible(cubes: List[int]) -> bool:
+    if len(cubes) <= 2:
+        return True
+
+    return level_is_smaller(cubes)
+
+
+def is_possible_non_req(cubes):
+    if len(cubes) <= 2:
+        return True
+
+    while len(cubes) > 1:
+        if cubes[0] >= cubes[-1]:
+            val = cubes.pop(0)
         else:
-            minimum = mini
+            val = cubes.pop(-1)
 
-    return True if len(cubes) % 2 == 0 else cubes[len(cubes) // 2] <= minimum
+        if val < max(cubes[0], cubes[- 1]):
+            return False
+
+    return True
 
 
-for i in range(n):
-    n = input()
-    blocks = list(map(int, input().split()))
+if __name__ == '__main__':
+    with_file = True
 
-    print("Yes" if is_possible(blocks) else "No")
+    if with_file:
+        with open("input04.txt") as file:
+            N = int(file.readline())
+
+            for _ in range(N):
+                file.readline()
+                cubes = list(map(int, file.readline().split()))
+
+                # print()
+                print("Yes" if is_possible_non_req(cubes) else "No")
+    else:
+        N = int(input())
+
+        for _ in range(N):
+            input()
+            cubes = list(map(int, input().split()))
+
+            # print()
+            # print("Yes" if is_possible(cubes) else "No")
+            print("Yes" if is_possible_non_req(cubes) else "No")
