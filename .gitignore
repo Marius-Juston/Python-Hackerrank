@@ -1,2 +1,19 @@
+__pycache__/
+*.py[cod]
+*$py.class
 
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+
+# pyenv
+.python-version
+# User-specific stuff:
 .idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
